@@ -9,17 +9,38 @@
 		<script src="js/jquery.mobile-1.4.5.min.js"></script>
 	</head>
 	<body onload="init()">
-		
+<?php
+		$serverName = "rejestracje.database.windows.net";
+		$connectionOptions = array(
+			"Database" => "rejestracje",
+			"Uid" => "Kalbaar",
+			"PWD" => "ZAQ!2wsx"
+		);
+				//Establishes the connection
+		$conn = sqlsrv_connect($serverName, $connectionOptions);
+		$tsql= "SELECT Kod, Powiat/Służba, Stolica powiatu
+		FROM rejestracje
+		WHERE Kod = 'KNT';";
+		$getResults= sqlsrv_query($conn, $tsql);
+		echo ("Reading data from table" . PHP_EOL);
+		if ($getResults == FALSE)
+			echo (sqlsrv_errors());
+		while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+			echo ($row['Powiat/Służba'] . " " . $row['Stolica powiatu'] . PHP_EOL);
+		}
+		sqlsrv_free_stmt($getResults);
+?>	
 		<!-- My app main page -->
+		
 		<div data-role="page" id="pageone">
 		  <div data-role="header">
 			<h1>Aplikacja odnajdująca tablice rejestracyjne</h1>
 		  </div>
 		  <div data-role="main" class="ui-content">
 			<p>Wyszukiwanie po numerze rejestracyjnym:</p>
-			<a href="#rejestracja" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="deviceInfo()">Kliknij mnie!</a>
+			<a href="#rejestracja" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ultra-expanded" >Kliknij mnie!</a>
 			<p>Wyszukiwanie po województwach:</p>
-			<a href="#wojewodztwo" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="deviceInfo()">Kliknij mnie!</a>
+			<a href="#wojewodztwo" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Kliknij mnie!</a>
 			<p>Skan tablicy rejestracyjnej:</p>
 			<a href="#skan" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="deviceInfo()">Kliknij mnie!</a>
 		  </div>
@@ -34,7 +55,10 @@
 				<h1>Wyszukiwanie po numerze rejestracyjnym</h1>
 			</div>
 			<div role="main" class="ui-content">
-				<p id="deviceDetails">Tutaj będą pola do wyszukiwania</p>
+				<p id="wprowadzenie">Wyszukaj danych dotyczących tablicy rejestracyjnej zaczynającej sie od:</p>
+				<ul id="wyszukiwarka_rejestracja" data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Wpisz pierwsze litery tablicy" ></ul>
+				<a class="ui-btn ui-btn-inline ui-content ui-corner-all ui-shadow" onclick="wyswetlanie()">Wyszukaj</a>
+				<h1 id="demo"></h1>
 			</div>
 		</div>		
 		<!-- Wojewodztwo  -->

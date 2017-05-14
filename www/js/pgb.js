@@ -18,3 +18,7 @@ function deviceInfo() {
 
 	document.getElementById("deviceDetails").innerHTML = info;	
 }
+function wyswietlanie() {
+	
+	document.getElementById("demo").innerHTML = "Hello World";
+}
