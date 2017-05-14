@@ -7,29 +7,9 @@
 		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
 		<script src="js/jquery-2.1.4.min.js"></script>
 		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+		<script src="https://zumo.blob.core.windows.net/sdk/azure-mobile-apps-client.min.js"></script>
 	</head>
 	<body onload="init()">
-<?php
-		$serverName = "rejestracje.database.windows.net";
-		$connectionOptions = array(
-			"Database" => "rejestracje",
-			"Uid" => "Kalbaar",
-			"PWD" => "ZAQ!2wsx"
-		);
-				//Establishes the connection
-		$conn = sqlsrv_connect($serverName, $connectionOptions);
-		$tsql= "SELECT Kod, Powiat/Służba, Stolica powiatu
-		FROM rejestracje
-		WHERE Kod = 'KNT';";
-		$getResults= sqlsrv_query($conn, $tsql);
-		echo ("Reading data from table" . PHP_EOL);
-		if ($getResults == FALSE)
-			echo (sqlsrv_errors());
-		while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-			echo ($row['Powiat/Służba'] . " " . $row['Stolica powiatu'] . PHP_EOL);
-		}
-		sqlsrv_free_stmt($getResults);
-?>	
 		<!-- My app main page -->
 		
 		<div data-role="page" id="pageone">
@@ -57,7 +37,7 @@
 			<div role="main" class="ui-content">
 				<p id="wprowadzenie">Wyszukaj danych dotyczących tablicy rejestracyjnej zaczynającej sie od:</p>
 				<ul id="wyszukiwarka_rejestracja" data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Wpisz pierwsze litery tablicy" ></ul>
-				<a class="ui-btn ui-btn-inline ui-content ui-corner-all ui-shadow" onclick="wyswetlanie()">Wyszukaj</a>
+				<a class="ui-btn ui-btn-inline ui-content ui-corner-all ui-shadow" onclick="success()">Wyszukaj</a>
 				<h1 id="demo"></h1>
 			</div>
 		</div>		

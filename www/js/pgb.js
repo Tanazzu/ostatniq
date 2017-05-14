@@ -18,7 +18,28 @@ function deviceInfo() {
 
 	document.getElementById("deviceDetails").innerHTML = info;	
 }
-function wyswietlanie() {
+/**
+ * Process the results that are received by a call to table.read()
+ *
+ * @param {Object} results the results as a pseudo-array
+ * @param {int} results.length the length of the results array
+ * @param {Object} results[] the individual results
+ */
+function success(results) {
+   var numItemsRead = results.length;
+
+   for (var i = 0 ; i < results.length ; i++) {
+       var row = results[i];
+       // Each row is an object - the properties are the columns
+   }
+}
+
+function failure(error) {
+    throw new Error('Error loading data: ', error);
+}
+
+table
+    .read()
+    .then(success, failure);
 	
-	document.getElementById("demo").innerHTML = "Hello World";
 }
